@@ -132,6 +132,19 @@ func TestTrees(t *testing.T) {
 	}
 }
 
+func TestPrefix(t *testing.T) {
+	mt, err := Parse(validComplexMediaType)
+
+	if nil != err {
+		t.Errorf("Parsing failed for valid '%s'", validComplexMediaType)
+	} else {
+
+		if mt.Prefix() != "vnd" {
+			t.Errorf("Incorrect prefix for %+v", mt)
+		}
+	}
+}
+
 func TestSuffix(t *testing.T) {
 	mt, err := Parse(validComplexMediaType)
 

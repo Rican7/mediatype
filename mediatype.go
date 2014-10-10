@@ -36,6 +36,7 @@ type MediaType interface {
 	MainType() string
 	SubType() string
 	Trees() []string
+	Prefix() string
 	Suffix() string
 }
 
@@ -103,6 +104,19 @@ func (m *mediaType) Trees() []string {
 	}
 
 	return m.trees
+}
+
+// Get the prefix of the type's trees, lazily
+func (m *mediaType) Prefix() string {
+	if !m.beenSplit {
+		m.splitTypes()
+	}
+
+	if 0 < len(m.trees) {
+		return m.trees[0]
+	}
+
+	return ""
 }
 
 // Get the "suffix" of the type as a string, lazily
