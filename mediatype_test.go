@@ -90,6 +90,35 @@ func TestParse(t *testing.T) {
 	}
 }
 
+func TestFullType(t *testing.T) {
+	mt, err := Parse(validComplexMediaType)
+
+	if nil != err {
+		t.Errorf("Parsing failed for valid '%s'", validComplexMediaType)
+	} else {
+
+		if mt.FullType() != "application/vnd.google-earth.kml+xml" {
+			t.Errorf("Incorrect full type for %+v", mt)
+		}
+	}
+}
+
+func TestParameters(t *testing.T) {
+	mt, err := Parse(validComplexMediaType)
+
+	if nil != err {
+		t.Errorf("Parsing failed for valid '%s'", validComplexMediaType)
+	} else {
+		correctParameters := map[string]string{"charset": "utf-8"}
+
+		for i, tree := range mt.Parameters() {
+			if tree != correctParameters[i] {
+				t.Errorf("Incorrect parameters for %+v", mt)
+			}
+		}
+	}
+}
+
 func TestMainType(t *testing.T) {
 	mt, err := Parse(validComplexMediaType)
 
@@ -154,6 +183,19 @@ func TestSuffix(t *testing.T) {
 
 		if mt.Suffix() != "xml" {
 			t.Errorf("Incorrect suffix for %+v", mt)
+		}
+	}
+}
+
+func TestString(t *testing.T) {
+	mt, err := Parse(validComplexMediaType)
+
+	if nil != err {
+		t.Errorf("Parsing failed for valid '%s'", validComplexMediaType)
+	} else {
+
+		if mt.String() != validComplexMediaType {
+			t.Errorf("Incorrect string for %+v", mt)
 		}
 	}
 }

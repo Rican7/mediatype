@@ -20,7 +20,7 @@ contentTypeString := "application/vnd.google-earth.kml+xml; charset=utf-8"
 mediaType, _ := mediatype.Parse(contentTypeString)
 
 mediaType.FullType()   // "application/vnd.google-earth.kml+xml"
-mediaType.Parameters() // [charset: "utf-8"]
+mediaType.Parameters() // ["charset": "utf-8"]
 mediaType.MainType()   // "application"
 mediaType.SubType()    // "kml"
 mediaType.Trees()      // ["vnd", "google-earth"]
