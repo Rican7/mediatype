@@ -1,0 +1,16 @@
+language: go
+go:
+    - 1.1
+    - 1.2
+    - 1.3
+
+install:
+    # Basic go errors
+    - go build -v ./...
+
+script:
+    # Check for format errors
+    - errorCount=$(gofmt -l mediatype.go | wc -l); echo $errorCount
+
+    # Run tests
+    - go test -v ./...
