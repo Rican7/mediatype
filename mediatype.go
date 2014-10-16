@@ -45,11 +45,10 @@ type mediaType struct {
 	fullType string
 	params   map[string]string
 
-	beenSplit bool
-	mainType  string
-	trees     []string
-	subType   string
-	suffix    string
+	mainType string
+	trees    []string
+	subType  string
+	suffix   string
 }
 
 /**
@@ -64,10 +63,15 @@ func Parse(raw string) (MediaType, error) {
 		return nil, err
 	}
 
-	return &mediaType{
+	// Build from the raw
+	mediaType := &mediaType{
 		fullType: normalized,
 		params:   params,
-	}, nil
+	}
+
+	mediaType.splitTypes()
+
+	return mediaType, nil
 }
 
 // Get the normalized type and sub-type as a string
@@ -80,39 +84,23 @@ func (m *mediaType) Parameters() map[string]string {
 	return m.params
 }
 
-// Get the "main" (top-level) type as a string, lazily
+// Get the "main" (top-level) type as a string
 func (m *mediaType) MainType() string {
-	if !m.beenSplit {
-		m.splitTypes()
-	}
-
 	return m.mainType
 }
 
-// Get the "sub" type as a string, lazily
+// Get the "sub" type as a string
 func (m *mediaType) SubType() string {
-	if !m.beenSplit {
-		m.splitTypes()
-	}
-
 	return m.subType
 }
 
-// Get the split "sub" type as an array of strings split by the namespace separator, lazily
+// Get the split "sub" type as an array of strings split by the namespace separator
 func (m *mediaType) Trees() []string {
-	if !m.beenSplit {
-		m.splitTypes()
-	}
-
 	return m.trees
 }
 
-// Get the prefix of the type's trees, lazily
+// Get the prefix of the type's trees
 func (m *mediaType) Prefix() string {
-	if !m.beenSplit {
-		m.splitTypes()
-	}
-
 	if 0 < len(m.trees) {
 		return m.trees[0]
 	}
@@ -120,12 +108,8 @@ func (m *mediaType) Prefix() string {
 	return ""
 }
 
-// Get the "suffix" of the type as a string, lazily
+// Get the "suffix" of the type as a string
 func (m *mediaType) Suffix() string {
-	if !m.beenSplit {
-		m.splitTypes()
-	}
-
 	return m.suffix
 }
 
@@ -162,6 +146,4 @@ func (m *mediaType) splitTypes() {
 			m.trees = treeSubSplit[0 : treeSubSplitLength-1]
 		}
 	}
-
-	m.beenSplit = true
 }
