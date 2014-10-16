@@ -14,7 +14,7 @@ install:
 
 script:
     # Check for format errors
-    - errorCount=$(gofmt -l mediatype.go | wc -l); exit $errorCount
+    - errors=$(gofmt -l .); echo $errors; (exit $([ "$errors" == "" ]))
 
     # Lint
     - golint ./...
@@ -25,4 +25,5 @@ script:
 matrix:
     allow_failures:
         - go: tip
+
     fast_finish: true
