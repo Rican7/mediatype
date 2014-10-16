@@ -85,7 +85,7 @@ func TestParse(t *testing.T) {
 		t.Errorf("Parsing failed for valid '%s' with error '%s'", key, err)
 	}
 
-	for key, _ := range invalid {
+	for key := range invalid {
 		t.Errorf("Parsing succeeded for invalid '%s'", key)
 	}
 }
