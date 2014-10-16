@@ -13,7 +13,7 @@ install:
     - go get github.com/golang/lint/golint
 
     # Modify our PATH
-    - export PATH=$PATH:$GOPATH/bin
+    - export PATH=$PATH:${GOPATH/:*/}/bin
 
 script:
     # Check for format errors
