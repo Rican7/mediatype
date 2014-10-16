@@ -16,25 +16,26 @@ import (
  * Constants
  */
 
+// ContentTypeHeader - The standard key of a MIMEHeader's content type
 const ContentTypeHeader = "Content-Type"
 
 /**
  * Functions
  */
 
-// Build a MediaType from the detected content type of a byte array
+// DetectFromBytes - Build a MediaType from the detected content type of a byte array
 func DetectFromBytes(data []byte) (MediaType, error) {
 	return Parse(http.DetectContentType(data))
 }
 
-// Build a MediaType from a MIMEHeader map
+// DetectFromHeader - Build a MediaType from a MIMEHeader map
 func DetectFromHeader(header textproto.MIMEHeader) (MediaType, error) {
 	contentType := header.Get(ContentTypeHeader)
 
 	return Parse(contentType)
 }
 
-// Build a MediaType from a FileHeader
+// DetectFromFileHeader - Build a MediaType from a FileHeader
 func DetectFromFileHeader(fileHeader multipart.FileHeader) (MediaType, error) {
 	return DetectFromHeader(fileHeader.Header)
 }
