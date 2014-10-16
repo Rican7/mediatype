@@ -16,13 +16,13 @@ import (
  */
 
 const (
-	// The character used to split the main and sub-types from a full type string
+	// MainSubSplitCharacter - The character used to split the main and sub-types from a full type string
 	MainSubSplitCharacter = "/"
 
-	// The character used to denote a suffix declaration
+	// SuffixCharacter - The character used to denote a suffix declaration
 	SuffixCharacter = "+"
 
-	// The character used to separate trees
+	// TreeSeparatorCharacter - The character used to separate trees
 	TreeSeparatorCharacter = "."
 )
 
@@ -30,6 +30,13 @@ const (
  * Types
  */
 
+// MediaType is the interface for an [Internet] Media Type model
+//
+// Each method is a getter for each piece of a Media Type's structure
+//
+// The `String()` method implements the fmt.Stringer interface to easily
+// print out the reconstructed parts of the MediaType model in a standards
+// compliant manner, following the `mime.FormatMediaType()` output
 type MediaType interface {
 	FullType() string
 	Parameters() map[string]string
@@ -38,6 +45,7 @@ type MediaType interface {
 	Trees() []string
 	Prefix() string
 	Suffix() string
+
 	String() string
 }
 
