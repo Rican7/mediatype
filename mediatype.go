@@ -38,6 +38,7 @@ type MediaType interface {
 	Trees() []string
 	Prefix() string
 	Suffix() string
+	String() string
 }
 
 type mediaType struct {
@@ -126,6 +127,11 @@ func (m *mediaType) Suffix() string {
 	}
 
 	return m.suffix
+}
+
+// Get a string representation conforming to RFC 2045 and RFC 2616
+func (m *mediaType) String() string {
+	return mime.FormatMediaType(m.fullType, m.params)
 }
 
 // Split the full type string into parts and assign those values to our struct
