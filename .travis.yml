@@ -9,9 +9,15 @@ install:
     # Basic go errors
     - go build -v ./...
 
+    # Lint
+    - go get github.com/golang/lint/golint
+
 script:
     # Check for format errors
     - errorCount=$(gofmt -l mediatype.go | wc -l); exit $errorCount
+
+    # Lint
+    - golint ./...
 
     # Run tests
     - go test -v ./...
