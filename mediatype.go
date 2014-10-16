@@ -4,6 +4,8 @@
  * Copyright © 2014 Trevor N. Suarez (Rican7)
  */
 
+// Package mediatype provides an [Internet] Media Type model and MIME type
+// string parser/formatter
 package mediatype
 
 import (

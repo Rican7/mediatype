@@ -4,6 +4,8 @@
  * Copyright © 2014 Trevor N. Suarez (Rican7)
  */
 
+// Tests for the mediatype package
+
 package mediatype
 
 import (

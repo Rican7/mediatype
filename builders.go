@@ -4,6 +4,9 @@
  * Copyright © 2014 Trevor N. Suarez (Rican7)
  */
 
+// This file provides builder/factory methods to create a MediaType instance
+// from many other types
+
 package mediatype
 
 import (
