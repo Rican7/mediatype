@@ -4,8 +4,8 @@
  * Copyright © 2014 Trevor N. Suarez (Rican7)
  */
 
-// Package mediatype provides an [Internet] Media Type model and MIME type
-// string parser/formatter
+// This file provides provides a mutable implementation of the MediaType interface
+
 package mediatype
 
 import (
@@ -17,87 +17,79 @@ import (
  * Types
  */
 
-// An immutable struct of a Media Type
-type mediaType struct {
-	main   string
-	tree   []string
-	sub    string
-	suf    string
-	params map[string]string
+// A mutable struct defining the components of a Media Type
+type MediaTypeMutable struct {
+	Main   string
+	Tree   []string
+	Sub    string
+	Suf    string
+	Params map[string]string
 }
 
-/**
- * Functions
- */
-
-// Parse a raw media type string into a MediaType interface compatible struct
-func Parse(raw string) (MediaType, error) {
-	normalizedFullType, params, err := mime.ParseMediaType(raw)
-
-	if nil != err {
-		return nil, err
-	}
-
-	mediaType := splitTypes(normalizedFullType)
-	mediaType.params = params
-
-	return mediaType, nil
+// Return a New instance of a MediaType struct
+func NewMutable() MediaType {
+	return &MediaTypeMutable{}
 }
 
 // Get the "main" (top-level) type as a string
-func (m *mediaType) MainType() string {
-	return m.main
+func (m *MediaTypeMutable) MainType() string {
+	return m.Main
 }
 
 // Get the "sub" type as a string
-func (m *mediaType) SubType() string {
-	return m.sub
+func (m *MediaTypeMutable) SubType() string {
+	return m.Sub
 }
 
 // Get the split "sub" type as an array of strings split by the namespace separator
-func (m *mediaType) Trees() []string {
-	return m.tree
+func (m *MediaTypeMutable) Trees() []string {
+	return m.Tree
 }
 
 // Get the prefix of the type's trees
-func (m *mediaType) Prefix() string {
-	if 0 < len(m.tree) {
-		return m.tree[0]
+func (m *MediaTypeMutable) Prefix() string {
+	if 0 < len(m.Tree) {
+		return m.Tree[0]
 	}
 
 	return ""
 }
 
 // Get the "suffix" of the type as a string
-func (m *mediaType) Suffix() string {
-	return m.suf
+func (m *MediaTypeMutable) Suffix() string {
+	return m.Suf
 }
 
 // Get the defined parameters of the media type
-func (m *mediaType) Parameters() map[string]string {
-	return m.params
+func (m *MediaTypeMutable) Parameters() map[string]string {
+	return m.Params
 }
 
 // Get the normalized type and sub-type as a string
-func (m *mediaType) FullType() string {
-	return ""
-	// return m.fullType
+func (m *MediaTypeMutable) FullType() string {
+	var fullType string
+
+	fullType += m.Main
+	fullType += strings.Join(m.Tree, TreeSeparatorCharacter)
+	fullType += TreeSeparatorCharacter + m.Sub
+	fullType += SuffixCharacter + m.Suf
+
+	return fullType
 }
 
 // Get a string representation conforming to RFC 2045 and RFC 2616
-func (m *mediaType) String() string {
-	return ""
-	// return mime.FormatMediaType(m.fullType, m.params)
+func (m *MediaTypeMutable) String() string {
+	return mime.FormatMediaType(m.FullType(), m.Params)
 }
 
 // Split the full type string into parts and assign those values to our struct
-func splitTypes(fullType string) *mediaType {
-	var mt *mediaType
+func splitTypes(fullType string) *MediaTypeMutable {
+	var mt *MediaTypeMutable
 
 	// Split the main/sub types
 	mainSubSplit := strings.Split(fullType, MainSubSplitCharacter)
 
-	mt.main = mainSubSplit[0]
+	mt.Main = mainSubSplit[0]
 
 	// If we got more than one part, we must have a sub-type
 	if 1 < len(mainSubSplit) {
@@ -106,18 +98,18 @@ func splitTypes(fullType string) *mediaType {
 
 		// If we got more than one part, we must have a suffix
 		if 1 < len(subSuffixSplit) {
-			mt.suf = subSuffixSplit[1]
+			mt.Suf = subSuffixSplit[1]
 		}
 
 		// Split the sub-type split into the possibly different trees
 		treeSubSplit := strings.Split(subSuffixSplit[0], TreeSeparatorCharacter)
 		treeSubSplitLength := len(treeSubSplit)
 
-		mt.sub = treeSubSplit[treeSubSplitLength-1]
+		mt.Sub = treeSubSplit[treeSubSplitLength-1]
 
 		// If we got more than one part, we must have tree definitions
 		if 1 < treeSubSplitLength {
-			mt.tree = treeSubSplit[0 : treeSubSplitLength-1]
+			mt.Tree = treeSubSplit[0 : treeSubSplitLength-1]
 		}
 	}
 

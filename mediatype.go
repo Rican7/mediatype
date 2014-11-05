@@ -10,6 +10,7 @@ package mediatype
 
 import (
 	"fmt"
+	"mime"
 )
 
 /**
@@ -49,4 +50,18 @@ type MediaType interface {
 	Parameters() map[string]string
 
 	FullType() string
+}
+
+// Parse a raw media type string into a MediaType interface compatible struct
+func Parse(raw string) (MediaType, error) {
+	normalizedFullType, params, err := mime.ParseMediaType(raw)
+
+	if nil != err {
+		return nil, err
+	}
+
+	mediaType := splitTypes(normalizedFullType)
+	mediaType.Params = params
+
+	return mediaType, nil
 }
