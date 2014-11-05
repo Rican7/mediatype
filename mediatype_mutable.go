@@ -69,7 +69,7 @@ func (m *MediaTypeMutable) Parameters() map[string]string {
 func (m *MediaTypeMutable) FullType() string {
 	var fullType string
 
-	fullType += m.Main
+	fullType += m.Main + MainSubSplitCharacter
 	fullType += strings.Join(m.Tree, TreeSeparatorCharacter)
 	fullType += TreeSeparatorCharacter + m.Sub
 	fullType += SuffixCharacter + m.Suf
