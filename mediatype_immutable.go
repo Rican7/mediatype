@@ -14,7 +14,7 @@ package mediatype
 
 // An immutable struct of a Media Type
 type MediaTypeImmutable struct {
-	contained *MediaTypeMutable
+	contained MediaTypeMutable
 }
 
 /**
@@ -28,7 +28,7 @@ func NewImmutable() MediaType {
 
 // Return a New instance of a MediaTypeImmutable struct
 func NewImmutableAsContainer(mutable MediaTypeMutable) MediaType {
-	return &MediaTypeImmutable{&mutable}
+	return &MediaTypeImmutable{mutable}
 }
 
 // Get the "main" (top-level) type as a string
@@ -73,5 +73,5 @@ func (m *MediaTypeImmutable) String() string {
 
 // Get a mutable version of this structure
 func (m *MediaTypeImmutable) Mutable() MediaTypeMutable {
-	return *m.contained
+	return m.contained
 }
