@@ -19,14 +19,35 @@ contentTypeString := "application/vnd.google-earth.kml+xml; charset=utf-8"
 
 mediaType, _ := mediatype.Parse(contentTypeString)
 
-mediaType.FullType()   // "application/vnd.google-earth.kml+xml"
-mediaType.Parameters() // ["charset": "utf-8"]
 mediaType.MainType()   // "application"
 mediaType.SubType()    // "kml"
 mediaType.Trees()      // ["vnd", "google-earth"]
 mediaType.Prefix()     // "vnd"
 mediaType.Suffix()     // "xml"
+mediaType.Parameters() // ["charset": "utf-8"]
+
+mediaType.FullType()   // "application/vnd.google-earth.kml+xml"
 mediaType.String()     // "application/vnd.google-earth.kml+xml; charset=utf-8"
+```
+
+## Mutability and Immutability
+
+```go
+mutable := &MediaTypeMutable{
+    Main: "application",
+    Sub:  "json",
+}
+
+mutable.String()     // "application/json"
+
+mutable.Sub    = "xhtml"
+mutable.Suffix = "xml"
+mutable.String()     // "application/xhtml+xml"
+
+
+immutable := mutable.Immutable()
+mutable.Main = "image"
+immutable.String()     // "application/xhtml+xml"
 ```
 
 
