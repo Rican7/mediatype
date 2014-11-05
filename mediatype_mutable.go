@@ -65,11 +65,16 @@ func (m *MediaTypeMutable) Parameters() map[string]string {
 	return m.Params
 }
 
-// Get the normalized type and sub-type as a string
+// Get the normalized full type as a string
 func (m *MediaTypeMutable) FullType() string {
 	var fullType string
 
-	fullType += m.Main + MainSubSplitCharacter
+	fullType += m.Main
+
+	// If there are other pieces
+	if 0 < len(m.Tree) || "" != m.Sub || "" != m.Suf {
+		fullType += MainSubSplitCharacter
+	}
 
 	if 0 < len(m.Tree) {
 		fullType += strings.Join(m.Tree, TreeSeparatorCharacter)
