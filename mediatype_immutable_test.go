@@ -16,14 +16,14 @@ import (
  * Helper functions
  */
 
-func parseAndConvertToImmutable(raw string) (*MediaTypeImmutable, error) {
+func parseAndConvertToImmutable(raw string) (*Immutable, error) {
 	mt, err := Parse(validComplexMediaType)
 
 	if nil != err {
 		return nil, err
 	}
 
-	return mt.(*MediaTypeMutable).Immutable(), nil
+	return mt.(*Mutable).Immutable(), nil
 }
 
 /**
@@ -37,13 +37,13 @@ func TestNewImmutable(t *testing.T) {
 		t.Errorf("%+v doesn't satisfy the MediaType interface", mt)
 	}
 
-	if _, ok := mt.(*MediaTypeImmutable); !ok {
+	if _, ok := mt.(*Immutable); !ok {
 		t.Errorf("MediaType %+v isn't an immutable", mt)
 	}
 }
 
 func TestNewImmutableAsContainer(t *testing.T) {
-	mutable := &MediaTypeMutable{Main: "application", Sub: "doge"}
+	mutable := &Mutable{Main: "application", Sub: "doge"}
 
 	mt := NewImmutableAsContainer(*mutable)
 
@@ -51,7 +51,7 @@ func TestNewImmutableAsContainer(t *testing.T) {
 		t.Errorf("%+v doesn't satisfy the MediaType interface", mt)
 	}
 
-	if _, ok := mt.(*MediaTypeImmutable); !ok {
+	if _, ok := mt.(*Immutable); !ok {
 		t.Errorf("MediaType %+v isn't an immutable", mt)
 	}
 

@@ -33,7 +33,7 @@ mediaType.String()     // "application/vnd.google-earth.kml+xml; charset=utf-8"
 ## Mutability and Immutability
 
 ```go
-mutable := &MediaTypeMutable{
+mutable := &mediatype.Mutable{
     Main: "application",
     Sub:  "json",
 }

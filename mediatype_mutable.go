@@ -17,8 +17,8 @@ import (
  * Types
  */
 
-// MediaTypeMutable is a struct defining the components of a Media Type
-type MediaTypeMutable struct {
+// Mutable is a struct defining the components of a Media Type
+type Mutable struct {
 	Main   string
 	Tree   []string
 	Sub    string
@@ -26,28 +26,28 @@ type MediaTypeMutable struct {
 	Params map[string]string
 }
 
-// NewMutable returns a new empty instance of a MediaTypeMutable struct
+// NewMutable returns a new empty instance of a Mutable struct
 func NewMutable() MediaType {
-	return &MediaTypeMutable{}
+	return &Mutable{}
 }
 
 // MainType returns the "main" (top-level) type as a string
-func (m *MediaTypeMutable) MainType() string {
+func (m *Mutable) MainType() string {
 	return m.Main
 }
 
 // SubType returns the "sub" type as a string
-func (m *MediaTypeMutable) SubType() string {
+func (m *Mutable) SubType() string {
 	return m.Sub
 }
 
 // Trees returns the split "sub" type as an array of strings split by the namespace separator
-func (m *MediaTypeMutable) Trees() []string {
+func (m *Mutable) Trees() []string {
 	return m.Tree
 }
 
 // Prefix returns the prefix of the type's trees
-func (m *MediaTypeMutable) Prefix() string {
+func (m *Mutable) Prefix() string {
 	if 0 < len(m.Tree) {
 		return m.Tree[0]
 	}
@@ -56,17 +56,17 @@ func (m *MediaTypeMutable) Prefix() string {
 }
 
 // Suffix returns the "suffix" of the type as a string
-func (m *MediaTypeMutable) Suffix() string {
+func (m *Mutable) Suffix() string {
 	return m.Suf
 }
 
 // Parameters returns the defined parameters of the media type
-func (m *MediaTypeMutable) Parameters() map[string]string {
+func (m *Mutable) Parameters() map[string]string {
 	return m.Params
 }
 
 // FullType returns the normalized full type as a string
-func (m *MediaTypeMutable) FullType() string {
+func (m *Mutable) FullType() string {
 	var fullType string
 
 	fullType += m.Main
@@ -91,18 +91,18 @@ func (m *MediaTypeMutable) FullType() string {
 }
 
 // Get a string representation conforming to RFC 2045 and RFC 2616
-func (m *MediaTypeMutable) String() string {
+func (m *Mutable) String() string {
 	return mime.FormatMediaType(m.FullType(), m.Params)
 }
 
 // Immutable returns an immutable version of this structure
-func (m MediaTypeMutable) Immutable() *MediaTypeImmutable {
-	return NewImmutableAsContainer(m).(*MediaTypeImmutable)
+func (m Mutable) Immutable() *Immutable {
+	return NewImmutableAsContainer(m).(*Immutable)
 }
 
 // Split the full type string into parts and assign those values to our struct
-func splitTypes(fullType string) *MediaTypeMutable {
-	var mt MediaTypeMutable
+func splitTypes(fullType string) *Mutable {
+	var mt Mutable
 
 	// Split the main/sub types
 	mainSubSplit := strings.Split(fullType, MainSubSplitCharacter)

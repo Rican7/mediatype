@@ -23,7 +23,7 @@ func TestNewMutable(t *testing.T) {
 		t.Errorf("%+v doesn't satisfy the MediaType interface", mt)
 	}
 
-	if _, ok := mt.(*MediaTypeMutable); !ok {
+	if _, ok := mt.(*Mutable); !ok {
 		t.Errorf("MediaType %+v isn't a mutable", mt)
 	}
 }
@@ -196,7 +196,7 @@ func TestImmutable(t *testing.T) {
 	if nil != err {
 		t.Errorf("Parsing failed for valid '%s'", validComplexMediaType)
 	} else {
-		mutable := mt.(*MediaTypeMutable)
+		mutable := mt.(*Mutable)
 		immutable := mutable.Immutable()
 
 		if mutable.String() != immutable.String() {
