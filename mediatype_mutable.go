@@ -84,7 +84,7 @@ func (m *MediaTypeMutable) String() string {
 
 // Split the full type string into parts and assign those values to our struct
 func splitTypes(fullType string) *MediaTypeMutable {
-	var mt *MediaTypeMutable
+	var mt MediaTypeMutable
 
 	// Split the main/sub types
 	mainSubSplit := strings.Split(fullType, MainSubSplitCharacter)
@@ -114,5 +114,5 @@ func splitTypes(fullType string) *MediaTypeMutable {
 	}
 
 	// Build from the raw
-	return mt
+	return &mt
 }
