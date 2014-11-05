@@ -38,7 +38,27 @@ func TestNewImmutable(t *testing.T) {
 	}
 
 	if _, ok := mt.(*MediaTypeImmutable); !ok {
-		t.Errorf("MediaType %+v isn't a immutable", mt)
+		t.Errorf("MediaType %+v isn't an immutable", mt)
+	}
+}
+
+func TestNewImmutableAsContainer(t *testing.T) {
+	mutable := &MediaTypeMutable{Main: "application", Sub: "doge"}
+
+	mt := NewImmutableAsContainer(*mutable)
+
+	if _, ok := mt.(MediaType); !ok {
+		t.Errorf("%+v doesn't satisfy the MediaType interface", mt)
+	}
+
+	if _, ok := mt.(*MediaTypeImmutable); !ok {
+		t.Errorf("MediaType %+v isn't an immutable", mt)
+	}
+
+	mutable.Sub = "nope"
+
+	if mt.String() == mutable.String() {
+		t.Errorf("Immutable was mutated for %+v", mt)
 	}
 }
 
