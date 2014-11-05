@@ -61,7 +61,7 @@ func (m *MediaTypeImmutable) Parameters() map[string]string {
 	return m.contained.Parameters()
 }
 
-// Get the normalized type and sub-type as a string
+// Get the normalized full type as a string
 func (m *MediaTypeImmutable) FullType() string {
 	return m.contained.FullType()
 }
@@ -69,4 +69,9 @@ func (m *MediaTypeImmutable) FullType() string {
 // Get a string representation conforming to RFC 2045 and RFC 2616
 func (m *MediaTypeImmutable) String() string {
 	return m.contained.String()
+}
+
+// Get a mutable version of this structure
+func (m *MediaTypeImmutable) Mutable() MediaTypeMutable {
+	return *m.contained
 }
