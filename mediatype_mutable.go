@@ -70,9 +70,17 @@ func (m *MediaTypeMutable) FullType() string {
 	var fullType string
 
 	fullType += m.Main + MainSubSplitCharacter
-	fullType += strings.Join(m.Tree, TreeSeparatorCharacter)
-	fullType += TreeSeparatorCharacter + m.Sub
-	fullType += SuffixCharacter + m.Suf
+
+	if 0 < len(m.Tree) {
+		fullType += strings.Join(m.Tree, TreeSeparatorCharacter)
+		fullType += TreeSeparatorCharacter
+	}
+
+	fullType += m.Sub
+
+	if "" != m.Suf {
+		fullType += SuffixCharacter + m.Suf
+	}
 
 	return fullType
 }
