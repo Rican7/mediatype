@@ -113,6 +113,19 @@ func TestFullType(t *testing.T) {
 	}
 }
 
+func TestFullTypeWithSimpleMain(t *testing.T) {
+	mt, err := Parse("application")
+
+	if nil != err {
+		t.Errorf("Parsing failed for valid '%s'", validComplexMediaType)
+	} else {
+
+		if mt.FullType() != "application" {
+			t.Errorf("Incorrect full type for %+v", mt)
+		}
+	}
+}
+
 func TestFullTypeWithSimpleMainAndSub(t *testing.T) {
 	mt, err := Parse("application/json")
 
@@ -121,6 +134,32 @@ func TestFullTypeWithSimpleMainAndSub(t *testing.T) {
 	} else {
 
 		if mt.FullType() != "application/json" {
+			t.Errorf("Incorrect full type for %+v", mt)
+		}
+	}
+}
+
+func TestFullTypeWithSimpleMainAndSubAndTrees(t *testing.T) {
+	mt, err := Parse("image/vnd.djvu")
+
+	if nil != err {
+		t.Errorf("Parsing failed for valid '%s'", validComplexMediaType)
+	} else {
+
+		if mt.FullType() != "image/vnd.djvu" {
+			t.Errorf("Incorrect full type for %+v", mt)
+		}
+	}
+}
+
+func TestFullTypeWithSimpleMainAndSubAndPrefix(t *testing.T) {
+	mt, err := Parse("application/xhtml+xml")
+
+	if nil != err {
+		t.Errorf("Parsing failed for valid '%s'", validComplexMediaType)
+	} else {
+
+		if mt.FullType() != "application/xhtml+xml" {
 			t.Errorf("Incorrect full type for %+v", mt)
 		}
 	}
