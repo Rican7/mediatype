@@ -16,6 +16,18 @@ import (
  * Tests functions
  */
 
+func TestNewMutable(t *testing.T) {
+	mt := NewMutable()
+
+	if _, ok := mt.(MediaType); !ok {
+		t.Errorf("%+v doesn't satisfy the MediaType interface", mt)
+	}
+
+	if _, ok := mt.(*MediaTypeMutable); !ok {
+		t.Errorf("MediaType %+v isn't a mutable", mt)
+	}
+}
+
 func TestMainType(t *testing.T) {
 	mt, err := Parse(validComplexMediaType)
 

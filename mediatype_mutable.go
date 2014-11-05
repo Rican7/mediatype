@@ -96,8 +96,8 @@ func (m *MediaTypeMutable) String() string {
 }
 
 // Get an immutable version of this structure
-func (m MediaTypeMutable) Immutable() MediaType {
-	return NewImmutableAsContainer(m)
+func (m MediaTypeMutable) Immutable() *MediaTypeImmutable {
+	return NewImmutableAsContainer(m).(*MediaTypeImmutable)
 }
 
 // Split the full type string into parts and assign those values to our struct
