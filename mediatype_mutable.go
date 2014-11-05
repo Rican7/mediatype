@@ -95,6 +95,11 @@ func (m *MediaTypeMutable) String() string {
 	return mime.FormatMediaType(m.FullType(), m.Params)
 }
 
+// Get an immutable version of this structure
+func (m MediaTypeMutable) Immutable() MediaType {
+	return NewImmutableAsContainer(m)
+}
+
 // Split the full type string into parts and assign those values to our struct
 func splitTypes(fullType string) *MediaTypeMutable {
 	var mt MediaTypeMutable

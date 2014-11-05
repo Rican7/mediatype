@@ -177,3 +177,24 @@ func TestString(t *testing.T) {
 		}
 	}
 }
+
+func TestImmutable(t *testing.T) {
+	mt, err := Parse(validComplexMediaType)
+
+	if nil != err {
+		t.Errorf("Parsing failed for valid '%s'", validComplexMediaType)
+	} else {
+		mutable := mt.(*MediaTypeMutable)
+		immutable := mutable.Immutable()
+
+		if mutable.String() != immutable.String() {
+			t.Errorf("Immutable doesn't match for %+v", mutable)
+		}
+
+		mutable.Main = "asd"
+
+		if mutable.String() == immutable.String() {
+			t.Errorf("Immutable was mutated for %+v", mutable)
+		}
+	}
+}
