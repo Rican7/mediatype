@@ -12,7 +12,7 @@ package mediatype
  * Types
  */
 
-// An immutable struct of a Media Type
+// MediaTypeImmutable is an immutable encapsulation of a Media Type
 type MediaTypeImmutable struct {
 	contained MediaTypeMutable
 }
@@ -21,47 +21,48 @@ type MediaTypeImmutable struct {
  * Functions
  */
 
-// Return a New instance of a MediaTypeImmutable struct
+// NewImmutable returns a new empty instance of a MediaTypeImmutable struct
 func NewImmutable() MediaType {
 	return &MediaTypeImmutable{}
 }
 
-// Return a New instance of a MediaTypeImmutable struct
+// NewImmutableAsContainer returns a new instance of a MediaTypeImmutable struct
+// with the values matching the values of the passed MediaTypeMutable struct
 func NewImmutableAsContainer(mutable MediaTypeMutable) MediaType {
 	return &MediaTypeImmutable{mutable}
 }
 
-// Get the "main" (top-level) type as a string
+// MainType returns the "main" (top-level) type as a string
 func (m *MediaTypeImmutable) MainType() string {
 	return m.contained.MainType()
 }
 
-// Get the "sub" type as a string
+// SubType returns the "sub" type as a string
 func (m *MediaTypeImmutable) SubType() string {
 	return m.contained.SubType()
 }
 
-// Get the split "sub" type as an array of strings split by the namespace separator
+// Trees returns the split "sub" type as an array of strings split by the namespace separator
 func (m *MediaTypeImmutable) Trees() []string {
 	return m.contained.Trees()
 }
 
-// Get the prefix of the type's trees
+// Prefix returns the prefix of the type's trees
 func (m *MediaTypeImmutable) Prefix() string {
 	return m.contained.Prefix()
 }
 
-// Get the "suffix" of the type as a string
+// Suffix returns the "suffix" of the type as a string
 func (m *MediaTypeImmutable) Suffix() string {
 	return m.contained.Suffix()
 }
 
-// Get the defined parameters of the media type
+// Parameters returns the defined parameters of the media type
 func (m *MediaTypeImmutable) Parameters() map[string]string {
 	return m.contained.Parameters()
 }
 
-// Get the normalized full type as a string
+// FullType returns the normalized full type as a string
 func (m *MediaTypeImmutable) FullType() string {
 	return m.contained.FullType()
 }
@@ -71,7 +72,7 @@ func (m *MediaTypeImmutable) String() string {
 	return m.contained.String()
 }
 
-// Get a mutable version of this structure
+// Mutable returns a mutable version of this structure
 func (m *MediaTypeImmutable) Mutable() MediaTypeMutable {
 	return m.contained
 }

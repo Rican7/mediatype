@@ -17,7 +17,7 @@ import (
  * Types
  */
 
-// A mutable struct defining the components of a Media Type
+// MediaTypeMutable is a struct defining the components of a Media Type
 type MediaTypeMutable struct {
 	Main   string
 	Tree   []string
@@ -26,27 +26,27 @@ type MediaTypeMutable struct {
 	Params map[string]string
 }
 
-// Return a New instance of a MediaType struct
+// NewMutable returns a new empty instance of a MediaTypeMutable struct
 func NewMutable() MediaType {
 	return &MediaTypeMutable{}
 }
 
-// Get the "main" (top-level) type as a string
+// MainType returns the "main" (top-level) type as a string
 func (m *MediaTypeMutable) MainType() string {
 	return m.Main
 }
 
-// Get the "sub" type as a string
+// SubType returns the "sub" type as a string
 func (m *MediaTypeMutable) SubType() string {
 	return m.Sub
 }
 
-// Get the split "sub" type as an array of strings split by the namespace separator
+// Trees returns the split "sub" type as an array of strings split by the namespace separator
 func (m *MediaTypeMutable) Trees() []string {
 	return m.Tree
 }
 
-// Get the prefix of the type's trees
+// Prefix returns the prefix of the type's trees
 func (m *MediaTypeMutable) Prefix() string {
 	if 0 < len(m.Tree) {
 		return m.Tree[0]
@@ -55,17 +55,17 @@ func (m *MediaTypeMutable) Prefix() string {
 	return ""
 }
 
-// Get the "suffix" of the type as a string
+// Suffix returns the "suffix" of the type as a string
 func (m *MediaTypeMutable) Suffix() string {
 	return m.Suf
 }
 
-// Get the defined parameters of the media type
+// Parameters returns the defined parameters of the media type
 func (m *MediaTypeMutable) Parameters() map[string]string {
 	return m.Params
 }
 
-// Get the normalized full type as a string
+// FullType returns the normalized full type as a string
 func (m *MediaTypeMutable) FullType() string {
 	var fullType string
 
@@ -95,7 +95,7 @@ func (m *MediaTypeMutable) String() string {
 	return mime.FormatMediaType(m.FullType(), m.Params)
 }
 
-// Get an immutable version of this structure
+// Immutable returns an immutable version of this structure
 func (m MediaTypeMutable) Immutable() *MediaTypeImmutable {
 	return NewImmutableAsContainer(m).(*MediaTypeImmutable)
 }
